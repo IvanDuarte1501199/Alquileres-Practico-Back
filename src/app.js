@@ -24,9 +24,22 @@ app.use(function (req, res, next) {
 app.use('/api/personas', personasRuta);
 app.use('/api/alquileres', alquileresRuta);
 app.use('/api/propiedades', propiedadesRuta);
+
 //sincronizacion con la db
-database.sync()
-  .then(() => console.log('Base actualizada'));
+
+database.sync({
+  logging: msg => console.log('msg', msg),
+}).then(() => {
+  console.log("Database connected!");
+}).catch(error => {
+  console.log('Error database connect: ', error);
+});
+
+
+/* database.sync()
+  .then(() => console.log('Base actualizada')).catch(err => console.log(err));
+ */
+
 
 //exportamos la app
 export default app;
